@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{bd55cbf2-2ddd-4e7e-97e6-e4ba526c1c9e}</ProjectGuid>
+    <ProjectGuid>{BD55CBF2-2DDD-4E7E-97E6-E4BA526C1C9E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UberFareEstimateFramework</RootNamespace>
@@ -79,11 +79,19 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Compile Include="Common\Constants.cs" />
+    <Compile Include="OAuthService\OAuthOlaProvider.cs" />
+    <Compile Include="OAuthService\OAuthOlaProviderResult.cs" />
+    <Compile Include="OAuthService\OAuthOlaService.cs" />
+    <Compile Include="OAuthService\OAuthUberProvider.cs" />
+    <Compile Include="OAuthService\OAuthUberProviderResult.cs" />
+    <Compile Include="OAuthService\OAuthUberService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\portable-net45+wp80+win8+wpa81+dnxcore50\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
@@ -99,5 +107,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-
 </Project>
