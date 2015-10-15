@@ -6,9 +6,66 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:uc="using:FareEstimate.Views.Control"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource TextStyleMediumFontSize}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Page.Resources>
+        <DataTemplate x:Key="CabsListTemplate">
+            <Border BorderThickness="2" Height="100" Width="450" Background="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="45"/>
+                        <RowDefinition Height="45"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="170"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="{Binding CabTypeIcon}" HorizontalAlignment="Left" Grid.Column="0" Height="40" Width="40"/>
+                        <TextBlock Text="{Binding DisplayName}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="1" Style="{StaticResource TitleTextPrimaryLarge}"/>
+                        <TextBlock Text="{Binding PriceEstimate}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="2" Style="{StaticResource TitleTextPrimaryLarge}"/>
+                    </Grid>
+                    <Grid Grid.Row="1" VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Uid="DistanceString" Grid.Column="1" Style="{StaticResource TitleTextPrimary}"/>
+                        <TextBlock Text="{Binding Distance}" Grid.Column="2" Style="{StaticResource TitleTextPrimary}"/>
+                        <TextBlock x:Uid="EstimatedTimeString" Grid.Column="4" Style="{StaticResource TitleTextPrimary}"/>
+                        <TextBlock Text="{Binding EstimatedTime}" Grid.Column="5" Style="{StaticResource TitleTextPrimary}"/>
+                    </Grid>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </Page.Resources>
 
+    <Grid x:Name="LayoutRoot" Background="{StaticResource BackgroundColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <uc:HeaderPage Grid.Row="0" x:Name="HeaderControl" Height="60"/>
+
+        <ProgressRing Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                        Width="150" Height="150" IsActive="True"  Background="Transparent" 
+                        Foreground="Indigo" Visibility="{Binding IsInProgress, Converter={StaticResource B2VConverter}}"/>
+        <ScrollViewer Grid.Row="1" VerticalScrollMode="Auto" BorderThickness="2">
+            <ListView ItemsSource="{Binding CabsListGroup}"
+                      ItemTemplate="{StaticResource CabsListTemplate}"
+                      Visibility="{Binding IsInProgress, Converter={StaticResource NB2VConverter}}">
+
+            </ListView>
+        </ScrollViewer>
     </Grid>
 </Page>

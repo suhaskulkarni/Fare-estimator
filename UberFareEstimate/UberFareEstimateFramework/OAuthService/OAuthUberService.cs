@@ -44,7 +44,7 @@ namespace UberFareEstimateFramework.OAuthService
         {
             get
             {
-                return "source_latitude";
+                return "start_latitude";
             }
         }
 
@@ -52,7 +52,7 @@ namespace UberFareEstimateFramework.OAuthService
         {
             get
             {
-                return "source_longitude";
+                return "start_longitude";
             }
         }
 
@@ -60,7 +60,7 @@ namespace UberFareEstimateFramework.OAuthService
         {
             get
             {
-                return "destination_latitude";
+                return "end_latitude";
             }
         }
 
@@ -68,7 +68,7 @@ namespace UberFareEstimateFramework.OAuthService
         {
             get
             {
-                return "destination_longitude";
+                return "end_longitude";
             }
         }
 

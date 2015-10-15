@@ -1,10 +1,17 @@
-﻿using System;
+﻿using FareEstimate.Common;
+using FareEstimate.DataModel;
+using FareEstimate.Enums;
+using FareEstimate.Viewmodel;
+using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,6 +32,8 @@ namespace FareEstimate.Views
         public PriceEstimatesPage()
         {
             this.InitializeComponent();
+            this.DataContext = ViewModel.ViewModelLocator.PriceEstimatesViewModel;
+            Messenger.Default.Register<NavigateToPageMessage>(this, NavigationPageEventHandler);
         }
 
         /// <summary>
@@ -34,6 +43,26 @@ namespace FareEstimate.Views
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            Messenger.Default.Send<PageTypeEnumMessage>(PageTypeEnumMessage.PriceEstimatesPage);
+
+            var dataContext = this.DataContext as Viewmodel.PriceEstimatesViewModel;
+            //if(e.Parameter != null)
+            //{
+                //CoordinatesDetailModel coordinates = e.Parameter as CoordinatesDetailModel;
+            CoordinatesDetailModel coordinates = new CoordinatesDetailModel();
+            coordinates.SourceLatitude = "12.9780275";
+            coordinates.SourceLongitude = "77.5701955";
+            coordinates.DestinationLatitude = "12.8728932";
+            coordinates.DestinationLongitude = "77.5945862";
+            dataContext.GetCabFareEstimates(coordinates);
+            //}
+        }
+
+        public async void NavigationPageEventHandler(NavigateToPageMessage msg)
+        {
+            ResourceLoader resourceLoader = new ResourceLoader();
+            await new MessageDialog(resourceLoader.GetString("UnableToGetCabsList")).ShowAsync();
+            Frame.Navigate(typeof(LocationPage));
         }
     }
 }

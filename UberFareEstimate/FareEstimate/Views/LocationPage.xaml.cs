@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FareEstimate.Enums;
+using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -34,6 +36,7 @@ namespace FareEstimate.Views
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            Messenger.Default.Send<PageTypeEnumMessage>(PageTypeEnumMessage.LocationPage);
         }
     }
 }

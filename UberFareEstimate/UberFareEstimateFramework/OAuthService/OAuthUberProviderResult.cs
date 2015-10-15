@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,7 +10,8 @@ namespace UberFareEstimateFramework.OAuthService
     public class OAuthUberProviderResult
     {
         public OAuthUberProviderResult(string productId, string currencyCode, string displayName, string priceEstimate, string lowPriceEstimate,
-                                        string highPriceEstimate, string surgeMultiplier, string timeEstimate, string distance)
+                                        string highPriceEstimate, string surgeMultiplier, string timeEstimate, string distance,
+                                        HttpStatusCode code)
         {
             this.ProductId = productId;
             this.CurrencyCode = currencyCode;
@@ -20,6 +22,7 @@ namespace UberFareEstimateFramework.OAuthService
             this.SurgeMultiplier = surgeMultiplier;
             this.TimeEstimate = timeEstimate;
             this.Distance = distance;
+            this.StatusCode = code;
         }
 
         public string ProductId { get; set; }
@@ -39,5 +42,7 @@ namespace UberFareEstimateFramework.OAuthService
         public string SurgeMultiplier { get; set; }
 
         public string Distance { get; set; }
+
+        public HttpStatusCode StatusCode { get; set; }
     }
 }

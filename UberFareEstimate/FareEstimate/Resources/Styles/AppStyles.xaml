@@ -1,0 +1,33 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FareEstimate.Resources.Styles">
+
+    <SolidColorBrush x:Key="BackgroundColor">
+        <SolidColorBrush.Color>#D2D2D2</SolidColorBrush.Color>
+    </SolidColorBrush>
+
+    <SolidColorBrush x:Key="HeaderBackgroundColor">
+        <SolidColorBrush.Color>#4B0082</SolidColorBrush.Color>
+    </SolidColorBrush>
+
+    <Style x:Name="HeaderTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="27"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontFamily" Value="Seoge WP" />
+    </Style>
+    <Style x:Name="TitleTextPrimaryLarge" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Seoge WP" />
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="Black" />
+    </Style>
+    <Style x:Name="TitleTextPrimary" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Seoge WP" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="Gray" />
+    </Style>
+    
+</ResourceDictionary>
