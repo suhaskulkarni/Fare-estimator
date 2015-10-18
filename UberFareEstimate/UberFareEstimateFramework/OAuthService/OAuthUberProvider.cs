@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,9 +31,13 @@ namespace UberFareEstimateFramework.OAuthService
                 if (responseMessage.StatusCode == HttpStatusCode.OK)
                 {
                     string token = await responseMessage.Content.ReadAsStringAsync();
-                    dynamic jsonString = JsonConvert.DeserializeObject(token);
+                    //dynamic jsonString = JsonConvert.DeserializeObject(token);
 
-                    foreach (var product in jsonString.prices)
+                    JObject jsonString = JObject.Parse(token);
+                    var priceList = jsonString["prices"];
+                    List<UberData> products = JsonConvert.DeserializeObject<List<UberData>>(priceList.ToString());
+
+                    foreach (var product in products)
                     {
                         string productId = product.product_id;
                         string currencyCode = product.currency_code;
@@ -58,5 +63,35 @@ namespace UberFareEstimateFramework.OAuthService
                 return null;
             }
         }
+    }
+
+    public class UberData
+    {
+        [JsonProperty("product_id")]
+        public string product_id { get; set; }
+
+        [JsonProperty("currency_code")]
+        public string currency_code { get; set; }
+
+        [JsonProperty("display_name")]
+        public string display_name { get; set; }
+
+        [JsonProperty("estimate")]
+        public string estimate { get; set; }
+
+        [JsonProperty("low_estimate")]
+        public string low_estimate { get; set; }
+
+        [JsonProperty("high_estimate")]
+        public string high_estimate { get; set; }
+
+        [JsonProperty("surge_multiplier")]
+        public string surge_multiplier { get; set; }
+
+        [JsonProperty("duration")]
+        public string duration { get; set; }
+
+        [JsonProperty("distance")]
+        public string distance { get; set; }
     }
 }

@@ -77,6 +77,11 @@ namespace FareEstimate.Viewmodel
             _oauthUberService.DestinationLatitude = coordinates.DestinationLatitude;
             _oauthUberService.DestinationLongitude = coordinates.DestinationLongitude;
 
+            _oauthOlaService.SourceLatitude = coordinates.SourceLatitude;
+            _oauthOlaService.SourceLongitude = coordinates.SourceLongitude;
+            _oauthOlaService.DestinationLatitude = coordinates.DestinationLatitude;
+            _oauthOlaService.DestinationLongitude = coordinates.DestinationLongitude;
+
             _oauthUberProviderList = await _oauthUberProvider.GetFareEstimates(_oauthUberService);
 
             if (_oauthUberProviderList != null)
