@@ -25,6 +25,9 @@
   </Applications>
   <Capabilities>
     <Capability Name="internetClientServer" />
+    <Capability Name="musicLibrary" />
+    <Capability Name="picturesLibrary" />
+    <Capability Name="videosLibrary" />
     <DeviceCapability Name="location" />
   </Capabilities>
 </Package>

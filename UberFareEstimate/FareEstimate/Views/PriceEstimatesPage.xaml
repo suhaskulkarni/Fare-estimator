@@ -52,15 +52,29 @@
     <Grid x:Name="LayoutRoot" Background="{StaticResource BackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <uc:HeaderPage Grid.Row="0" x:Name="HeaderControl" Height="60"/>
-
-        <ProgressRing Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch"
-                        Width="150" Height="150" IsActive="True"  Background="Transparent" 
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Uid="SortBy" Grid.Column="0" Margin="5,0,0,0" VerticalAlignment="Center" 
+                       Style="{StaticResource SortByTitleText}"
+                       Visibility="{Binding IsInProgress, Converter={StaticResource NB2VConverter}}"/>
+            <ComboBox x:Name="EstimateComboBox" Grid.Column="1" BorderBrush="{StaticResource BackgroundComplimentColor}" BorderThickness="3" Margin="0,0,5,0"
+                      ItemsSource="{Binding SortOrder, Mode=TwoWay}" Style="{StaticResource ComboBoxStyle}" 
+                      DisplayMemberPath="Sort" SelectedItem="{Binding SortOrderItem, Mode=TwoWay}" FontStretch="SemiExpanded" FontStyle="Oblique"
+                      SelectionChanged="Sort_SelectionChanged" Visibility="{Binding IsInProgress, Converter={StaticResource NB2VConverter}}">
+            </ComboBox>
+        </Grid>
+        <ProgressRing Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                        Width="150" Height="150" IsActive="True"  Background="Transparent"
                         Foreground="Indigo" Visibility="{Binding IsInProgress, Converter={StaticResource B2VConverter}}"/>
-        <ScrollViewer Grid.Row="1" VerticalScrollMode="Auto" BorderThickness="2">
+        <ScrollViewer x:Name="CabsListView" Grid.Row="2" VerticalScrollMode="Auto" BorderThickness="2">
             <ListView ItemsSource="{Binding CabsListGroup}"
                       ItemTemplate="{StaticResource CabsListTemplate}"
                       Visibility="{Binding IsInProgress, Converter={StaticResource NB2VConverter}}">

@@ -11,6 +11,10 @@
         <SolidColorBrush.Color>#4B0082</SolidColorBrush.Color>
     </SolidColorBrush>
 
+    <SolidColorBrush x:Key="BackgroundComplimentColor">
+        <SolidColorBrush.Color>#323832</SolidColorBrush.Color>
+    </SolidColorBrush>
+
     <Style x:Name="HeaderTextBlockStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="27"/>
         <Setter Property="FontWeight" Value="Bold"/>
@@ -29,5 +33,17 @@
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="Gray" />
     </Style>
-    
+    <Style x:Name="SortByTitleText" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Seoge WP" />
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="#363D36" />
+    </Style>
+    <Style x:Name="ComboBoxStyle" TargetType="ComboBox">
+        <Setter Property="Foreground" Value="#363D36"/>
+        <Setter Property="BorderBrush" Value="#363D36"/>
+        <Setter Property="BorderThickness" Value="3"/>
+        <Setter Property="FontFamily" Value="Seoge WP"/>
+    </Style>
+
 </ResourceDictionary>

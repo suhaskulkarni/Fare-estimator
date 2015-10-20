@@ -17,6 +17,7 @@ namespace FareEstimate.DataModel
             this.Distance = String.Format(distance + "mi");
             this.EstimatedTime = String.Format(estimatedTime + "mins");
             this.HighPriceEstimateInteger = highPriceEstimateInteger;
+            this.EstimatedTimeInteger = Convert.ToInt32(estimatedTime);
         }
 
         public string CabTypeIcon { get; set; }
@@ -30,5 +31,7 @@ namespace FareEstimate.DataModel
         public string EstimatedTime { get; set; }
 
         public int HighPriceEstimateInteger { get; set; }
+
+        public int EstimatedTimeInteger { get; set; }
     }
 }

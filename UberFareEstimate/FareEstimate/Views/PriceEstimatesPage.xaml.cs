@@ -64,5 +64,26 @@ namespace FareEstimate.Views
             await new MessageDialog(resourceLoader.GetString("UnableToGetCabsList")).ShowAsync();
             Frame.Navigate(typeof(LocationPage));
         }
+
+        private void Sort_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var dataContext = this.DataContext as PriceEstimatesViewModel;
+            if(sender != null)
+            {
+                if(sender is ComboBox)
+                {
+                    var selectedItem = (sender as ComboBox).SelectedItem;
+                    SortCabType result;
+                    if (selectedItem is CabsSortTypes)
+                    {
+                        Enum.TryParse<SortCabType>((selectedItem as CabsSortTypes).Sort, true, out result);
+                        if (dataContext.SortCommand.CanExecute(result))
+                        {
+                            dataContext.SortCommand.Execute(result);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

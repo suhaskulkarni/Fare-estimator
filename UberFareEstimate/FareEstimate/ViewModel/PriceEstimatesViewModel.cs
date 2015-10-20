@@ -2,6 +2,7 @@
 using FareEstimate.DataModel;
 using FareEstimate.Enums;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,12 @@ namespace FareEstimate.Viewmodel
             _oauthUberProviderList = new List<OAuthUberProviderResult>();
 
             ResourceContentLoader = new ResourceLoader();
+            SortOrder = CabsSortTypes.GetSortTypes();
+            SortOrderItem = SortOrder[0];
+            SortCommand = new RelayCommand<SortCabType>(SortCabsList);
         }
+
+        public RelayCommand<SortCabType> SortCommand { get; set; }
 
         private OAuthUberService _oauthUberService;
 
@@ -64,6 +70,32 @@ namespace FareEstimate.Viewmodel
             set
             {
                 Set("CabsListGroup", ref _cabsListGroup, value, true);
+            }
+        }
+
+        private ObservableCollection<CabsSortTypes> _sortOrder;
+        public ObservableCollection<CabsSortTypes> SortOrder
+        {
+            get
+            {
+                return _sortOrder; 
+            }
+            set
+            {
+                Set("SortOrder", ref _sortOrder, value, true);
+            }
+        }
+
+        private CabsSortTypes _sortOrderItem;
+        public CabsSortTypes SortOrderItem
+        {
+            get
+            {
+                return _sortOrderItem;
+            }
+            set
+            {
+                Set("SortOrderItem", ref _sortOrderItem, value, true);
             }
         }
 
@@ -110,5 +142,19 @@ namespace FareEstimate.Viewmodel
             IsInProgress = false;
         }
 
+        public void SortCabsList(SortCabType cabType)
+        {
+            switch(cabType)
+            {
+                case SortCabType.Price:
+                    CabsListGroup = new ObservableCollection<CabsListDetailModel>(CabsListGroup.OrderBy(x => x.HighPriceEstimateInteger).ToList());
+                    break;
+                case SortCabType.ETA:
+                    CabsListGroup = new ObservableCollection<CabsListDetailModel>(CabsListGroup.OrderBy(x => x.EstimatedTimeInteger).ToList());
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

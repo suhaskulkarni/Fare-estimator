@@ -16,40 +16,62 @@ namespace UberFareEstimateFramework.OAuthService
         public async Task<List<OAuthUberProviderResult>> GetFareEstimates(OAuthUberService oauthService)
         {
             HttpClient httpClient = new HttpClient();
-            HttpResponseMessage responseMessage = new HttpResponseMessage();
+            HttpResponseMessage priceEstimateResponseMessage = new HttpResponseMessage();
+            HttpResponseMessage timeEstimateResponseMessage = new HttpResponseMessage();
             List<OAuthUberProviderResult> providerResult = new List<OAuthUberProviderResult>();
             try
             {
-                string uri = string.Format(oauthService.RequestUri + "/" + oauthService.RequestPriceEstimate + "?" +
+                string priceEstimateuri = string.Format(oauthService.RequestUri + "/" + oauthService.RequestPriceEstimate + "?" +
                             Constants.ServerTokenString + "=" + oauthService.ServerToken + "&" +
                             oauthService.SourceLatitudeString + "=" + oauthService.SourceLatitude + "&" +
                             oauthService.SourceLongitudeString + "=" + oauthService.SourceLongitude + "&" +
                             oauthService.DestinationLatitudeString + "=" + oauthService.DestinationLatitude + "&" +
                             oauthService.DestinationLongitudeString + "=" + oauthService.DestinationLongitude);
 
-                responseMessage = await httpClient.GetAsync(uri);
-                if (responseMessage.StatusCode == HttpStatusCode.OK)
+                priceEstimateResponseMessage = await httpClient.GetAsync(priceEstimateuri);
+
+                string timeEstimateUri = string.Format(oauthService.RequestUri + "/" + oauthService.RequestTimeEstimate + "?" +
+                                    Constants.ServerTokenString + "=" + oauthService.ServerToken + "&" +
+                                    oauthService.SourceLatitudeString + "=" + oauthService.SourceLatitude + "&" +
+                                    oauthService.SourceLongitudeString + "=" + oauthService.SourceLongitude);
+
+                timeEstimateResponseMessage = await httpClient.GetAsync(timeEstimateUri);
+
+                if (priceEstimateResponseMessage.StatusCode == HttpStatusCode.OK && timeEstimateResponseMessage.StatusCode == HttpStatusCode.OK)
                 {
-                    string token = await responseMessage.Content.ReadAsStringAsync();
-                    //dynamic jsonString = JsonConvert.DeserializeObject(token);
+                    string priceEstimatetoken = await priceEstimateResponseMessage.Content.ReadAsStringAsync();
+                    string timeEstimateToken = await timeEstimateResponseMessage.Content.ReadAsStringAsync();
 
-                    JObject jsonString = JObject.Parse(token);
-                    var priceList = jsonString["prices"];
-                    List<UberData> products = JsonConvert.DeserializeObject<List<UberData>>(priceList.ToString());
+                    JObject jsonTimeEstimateString = JObject.Parse(timeEstimateToken);
+                    var timeList = jsonTimeEstimateString["times"];
+                    List<UberData> timeEstimateProducts = JsonConvert.DeserializeObject<List<UberData>>(timeList.ToString());
 
-                    foreach (var product in products)
+                    JObject jsonPriceEstimateString = JObject.Parse(priceEstimatetoken);
+                    var priceList = jsonPriceEstimateString["prices"];
+                    List<UberData> priceEstimateProducts = JsonConvert.DeserializeObject<List<UberData>>(priceList.ToString());
+
+                    foreach (var product in timeEstimateProducts)
                     {
                         string productId = product.product_id;
-                        string currencyCode = product.currency_code;
                         string displayName = product.display_name;
-                        string priceEstimate = product.estimate;
-                        string lowEstimate = product.low_estimate;
-                        string highEstimate = product.high_estimate;
-                        string surge = product.surge_multiplier;
-                        string duration = product.duration;
-                        string distance = product.distance;
-                        providerResult.Add(new OAuthUberProviderResult(productId, currencyCode, displayName, priceEstimate,
-                                            lowEstimate, highEstimate, surge, duration, distance, responseMessage.StatusCode));
+                        string timeEstimate = product.estimate;
+
+                        foreach(var prod in priceEstimateProducts)
+                        {
+                            if (prod.product_id == product.product_id)
+                            {
+                                string currencyCode = prod.currency_code;
+                                string priceEstimate = prod.estimate;
+                                string lowEstimate = prod.low_estimate;
+                                string highEstimate = prod.high_estimate;
+                                string surge = prod.surge_multiplier;
+                                string distance = prod.distance;
+                                providerResult.Add(new OAuthUberProviderResult(productId, currencyCode, displayName, priceEstimate,
+                                            lowEstimate, highEstimate, surge, timeEstimate, distance, priceEstimateResponseMessage.StatusCode));
+                                break;
+                            }
+
+                        }
                     }
                     return providerResult;
                 }

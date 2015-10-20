@@ -129,6 +129,15 @@
   <data name="FindCabs" xml:space="preserve">
     <value>Find Cabs</value>
   </data>
+  <data name="Sortby/Text" xml:space="preserve">
+    <value>Sort By:</value>
+  </data>
+  <data name="SortByETA" xml:space="preserve">
+    <value>ETA</value>
+  </data>
+  <data name="SortByPrice" xml:space="preserve">
+    <value>Price</value>
+  </data>
   <data name="UnableToGetCabsList" xml:space="preserve">
     <value>Unable to get the cabs list. Sorry for the inconvenience.</value>
   </data>
