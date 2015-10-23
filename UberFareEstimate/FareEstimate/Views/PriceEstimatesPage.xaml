@@ -5,6 +5,7 @@
     xmlns:local="using:FareEstimate.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="using:BlendrocksToolkit.Controls"
     mc:Ignorable="d"
     xmlns:uc="using:FareEstimate.Views.Control"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -74,12 +75,13 @@
         <ProgressRing Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch"
                         Width="150" Height="150" IsActive="True"  Background="Transparent"
                         Foreground="Indigo" Visibility="{Binding IsInProgress, Converter={StaticResource B2VConverter}}"/>
-        <ScrollViewer x:Name="CabsListView" Grid.Row="2" VerticalScrollMode="Auto" BorderThickness="2">
+        <toolkit:PullToRefreshScrollViewer x:Name="CabsListView" RefreshCommand="{Binding Path=RefreshPageCommand}" PullText="{Binding PullToRefreshText}" 
+                                           RefreshText="{Binding ReleaseToRefreshText}" ArrowColor="{StaticResource BackgroundComplimentColor}" Grid.Row="2" BorderThickness="2">
             <ListView ItemsSource="{Binding CabsListGroup}"
                       ItemTemplate="{StaticResource CabsListTemplate}"
                       Visibility="{Binding IsInProgress, Converter={StaticResource NB2VConverter}}">
 
             </ListView>
-        </ScrollViewer>
+        </toolkit:PullToRefreshScrollViewer>
     </Grid>
 </Page>

@@ -31,9 +31,12 @@ namespace FareEstimate.Viewmodel
             SortOrder = CabsSortTypes.GetSortTypes();
             SortOrderItem = SortOrder[0];
             SortCommand = new RelayCommand<SortCabType>(SortCabsList);
+            RefreshPageCommand = new RelayCommand(RefreshPage);
         }
 
         public RelayCommand<SortCabType> SortCommand { get; set; }
+
+        public RelayCommand RefreshPageCommand { get; set; }
 
         private OAuthUberService _oauthUberService;
 
@@ -78,7 +81,7 @@ namespace FareEstimate.Viewmodel
         {
             get
             {
-                return _sortOrder; 
+                return _sortOrder;
             }
             set
             {
@@ -99,9 +102,11 @@ namespace FareEstimate.Viewmodel
             }
         }
 
+        private SortCabType sortCabType { get; set; }
+
         public ResourceLoader ResourceContentLoader { get; set; }
 
-        public async void GetCabFareEstimates(CoordinatesDetailModel coordinates)
+        public async void GetCabFareEstimates(CoordinatesDetailModel coordinates, bool isRefreshRequired = false)
         {
             IsInProgress = true;
             _oauthUberService.SourceLatitude = coordinates.SourceLatitude;
@@ -118,13 +123,17 @@ namespace FareEstimate.Viewmodel
 
             if (_oauthUberProviderList != null)
             {
+                CabsListGroup = new ObservableCollection<CabsListDetailModel>();
                 foreach (var uberProvider in _oauthUberProviderList)
                 {
                     CabsListGroup.Add(new CabsListDetailModel(CommonImageSource.GetCabTypeIcon(CabType.Uber), uberProvider.DisplayName,
                                       uberProvider.CurrencyCode, uberProvider.LowPriceEstimate, uberProvider.HighPriceEstimate,
                                       uberProvider.Distance, (Convert.ToInt32(uberProvider.TimeEstimate) / 60).ToString(), Convert.ToInt32(uberProvider.HighPriceEstimate)));
                 }
-
+                if (isRefreshRequired)
+                {
+                    await Task.Delay(1000);
+                }
                 //TODO: Yet to get app token from Ola.
                 //_oauthOlaProviderList = await _oauthOlaProvider.GetFareEstimates(_oauthOlaService);
                 //foreach (var olaProvider in _oauthOlaProviderList)
@@ -133,7 +142,20 @@ namespace FareEstimate.Viewmodel
                 //                      olaProvider.CurrencyCode, olaProvider.LowPriceEstimate, olaProvider.HighPriceEstimate,
                 //                      olaProvider.Distance, olaProvider.TimeEstimate));
                 //}
-                CabsListGroup.OrderBy(x => x.HighPriceEstimateInteger).ToList();
+                if (isRefreshRequired)
+                {
+                    if (sortCabType != null)
+                    {
+                        if (sortCabType == SortCabType.Price)
+                            CabsListGroup = new ObservableCollection<CabsListDetailModel>(CabsListGroup.OrderBy(x => x.HighPriceEstimateInteger).ToList());
+                        else if (sortCabType == SortCabType.ETA)
+                            CabsListGroup = new ObservableCollection<CabsListDetailModel>(CabsListGroup.OrderBy(x => x.EstimatedTimeInteger).ToList());
+                    }
+                }
+                else
+                {
+                    CabsListGroup.OrderBy(x => x.HighPriceEstimateInteger).ToList();
+                }
             }
             else
             {
@@ -144,16 +166,31 @@ namespace FareEstimate.Viewmodel
 
         public void SortCabsList(SortCabType cabType)
         {
-            switch(cabType)
+            switch (cabType)
             {
                 case SortCabType.Price:
+                    sortCabType = SortCabType.Price;
                     CabsListGroup = new ObservableCollection<CabsListDetailModel>(CabsListGroup.OrderBy(x => x.HighPriceEstimateInteger).ToList());
                     break;
                 case SortCabType.ETA:
+                    sortCabType = SortCabType.ETA;
                     CabsListGroup = new ObservableCollection<CabsListDetailModel>(CabsListGroup.OrderBy(x => x.EstimatedTimeInteger).ToList());
                     break;
                 default:
                     break;
+            }
+        }
+
+        public async void RefreshPage()
+        {
+            if (_oauthUberProvider != null)
+            {
+                CoordinatesDetailModel coordinatesDetailModel = new CoordinatesDetailModel();
+                coordinatesDetailModel.SourceLatitude = _oauthUberService.SourceLatitude;
+                coordinatesDetailModel.SourceLongitude = _oauthUberService.SourceLongitude;
+                coordinatesDetailModel.DestinationLatitude = _oauthUberService.DestinationLatitude;
+                coordinatesDetailModel.DestinationLongitude = _oauthUberService.DestinationLongitude;
+                GetCabFareEstimates(coordinatesDetailModel, true);
             }
         }
     }

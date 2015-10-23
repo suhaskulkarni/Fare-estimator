@@ -160,6 +160,10 @@
       <HintPath>..\packages\AdDuplexWinPhone81.9.0.0.5\lib\portable-win81+wpa81\AdDuplex.Universal.WinPhone.WinRT.winmd</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="BlendrocksToolkit, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BlendrocksToolkit.1.0.0.9\lib\wpa81\BlendrocksToolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight, Version=5.2.0.37222, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.2.0.0\lib\wpa81\GalaSoft.MvvmLight.dll</HintPath>
       <Private>True</Private>
