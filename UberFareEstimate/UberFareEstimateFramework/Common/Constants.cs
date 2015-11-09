@@ -11,5 +11,11 @@ namespace UberFareEstimateFramework.Common
         public const string ServerTokenString = "server_token";
 
         public const string AppToken = "X_APP_TOKEN";
+
+        public const string OlaCabService = "ola";
+
+        public const string TFSCabService = "tfs";
+
+        public const string MeruCabService = "meru";
     }
 }

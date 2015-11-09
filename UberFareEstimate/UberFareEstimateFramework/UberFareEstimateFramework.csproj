@@ -80,9 +80,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Common\Constants.cs" />
+    <Compile Include="Json\CabServices.cs" />
     <Compile Include="OAuthService\OAuthOlaProvider.cs" />
     <Compile Include="OAuthService\OAuthOlaProviderResult.cs" />
     <Compile Include="OAuthService\OAuthOlaService.cs" />
+    <Compile Include="OAuthService\OAuthRestOfCabsProvider.cs" />
+    <Compile Include="OAuthService\OAuthRestOfCabsProviderResult.cs" />
+    <Compile Include="OAuthService\OAuthRestOfCabsService.cs" />
     <Compile Include="OAuthService\OAuthUberProvider.cs" />
     <Compile Include="OAuthService\OAuthUberProviderResult.cs" />
     <Compile Include="OAuthService\OAuthUberService.cs" />

@@ -50,10 +50,11 @@ namespace FareEstimate.Views
             //{
                 //CoordinatesDetailModel coordinates = e.Parameter as CoordinatesDetailModel;
             CoordinatesDetailModel coordinates = new CoordinatesDetailModel();
-            coordinates.SourceLatitude = "12.9780275";
-            coordinates.SourceLongitude = "77.5701955";
-            coordinates.DestinationLatitude = "12.8728932";
-            coordinates.DestinationLongitude = "77.5945862";
+            coordinates.SourceLatitude = "12.9766637";
+            coordinates.SourceLongitude = "77.5712556";
+            coordinates.DestinationLatitude = "12.8789001";
+            coordinates.DestinationLongitude = "77.6089869";
+            coordinates.CityOfCoordinates = "Bangalore";
             dataContext.GetCabFareEstimates(coordinates);
             //}
         }
@@ -82,6 +83,28 @@ namespace FareEstimate.Views
                             dataContext.SortCommand.Execute(result);
                         }
                     }
+                }
+            }
+        }
+
+        public void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dataContext = this.DataContext as PriceEstimatesViewModel;
+            if(dataContext.RefreshPageCommand.CanExecute(sender))
+            {
+                dataContext.RefreshPageCommand.Execute(sender);
+            }
+        }
+
+        private void CabListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var dataContext = this.DataContext as PriceEstimatesViewModel;
+            if (e.ClickedItem is CabsListDetailModel)
+            {
+                var cabType = (e.ClickedItem as CabsListDetailModel).CabProviderType;
+                if (dataContext.LaunchCabAppCommand.CanExecute(cabType))
+                {
+                    dataContext.LaunchCabAppCommand.Execute(cabType);
                 }
             }
         }

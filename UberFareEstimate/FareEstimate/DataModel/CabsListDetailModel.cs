@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FareEstimate.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,15 +10,22 @@ namespace FareEstimate.DataModel
     public class CabsListDetailModel
     {
         public CabsListDetailModel(string cabTypeIcon, string displayName, string currencyCode, string lowPriceEstimate, 
-                                   string highPriceEstimate, string distance, string estimatedTime, int highPriceEstimateInteger)
+                                   string highPriceEstimate, string estimatedTime, int highPriceEstimateInteger, CabType cabType)
         {
             this.CabTypeIcon = cabTypeIcon;
             this.DisplayName = displayName;
-            this.PriceEstimate = String.Format(currencyCode + lowPriceEstimate + "-" + highPriceEstimate);
-            this.Distance = String.Format(distance + "mi");
+            if (string.IsNullOrWhiteSpace(highPriceEstimate))
+            {
+                this.PriceEstimate = String.Format(currencyCode + " " + lowPriceEstimate);
+            }
+            else
+            {
+                this.PriceEstimate = String.Format(currencyCode + " " + highPriceEstimate);
+            }
             this.EstimatedTime = String.Format(estimatedTime + "mins");
             this.HighPriceEstimateInteger = highPriceEstimateInteger;
             this.EstimatedTimeInteger = Convert.ToInt32(estimatedTime);
+            this.CabProviderType = cabType;
         }
 
         public string CabTypeIcon { get; set; }
@@ -26,12 +34,12 @@ namespace FareEstimate.DataModel
 
         public string PriceEstimate { get; set; }
 
-        public string Distance { get; set; }
-
         public string EstimatedTime { get; set; }
 
         public int HighPriceEstimateInteger { get; set; }
 
         public int EstimatedTimeInteger { get; set; }
+
+        public CabType CabProviderType { get; set; }
     }
 }

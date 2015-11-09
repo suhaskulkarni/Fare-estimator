@@ -33,6 +33,12 @@
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="Gray" />
     </Style>
+    <Style x:Name="TitleTextSecondary" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Seoge WP" />
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="White" />
+    </Style>
     <Style x:Name="SortByTitleText" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="Seoge WP" />
         <Setter Property="FontSize" Value="22" />

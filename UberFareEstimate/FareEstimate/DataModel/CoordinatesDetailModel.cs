@@ -15,5 +15,7 @@ namespace FareEstimate.DataModel
         public string DestinationLatitude { get; set; }
 
         public string DestinationLongitude { get; set; }
+
+        public string CityOfCoordinates { get; set; }
     }
 }
