@@ -67,29 +67,32 @@ namespace FareEstimate.Views
         private void SourceListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedLocation = (LocationDataModel)(sender as ListBox).SelectedItem;
+            if (selectedLocation == null)
+                return;
             source = selectedLocation;
             tb_source.Text = source.LocationName;
+            Flyout.GetAttachedFlyout(this.tb_source).Hide();
         }
 
         private void DestListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedLocation = (LocationDataModel)(sender as ListBox).SelectedItem;
+            if (selectedLocation == null)
+                return;
             destination = selectedLocation;
             tb_dest.Text = destination.LocationName;
+            Flyout.GetAttachedFlyout(this.tb_dest).Hide();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
-            rootFrame.Navigate(typeof(PriceEstimatesPage));
-        }
-
-        private void Flyout_Opening(object sender, object e)
-        {
-            var statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
-
-            statusBar.BackgroundColor = Colors.Indigo;
-            statusBar.BackgroundOpacity = 1;
+            CoordinatesDetailModel coordinates = new CoordinatesDetailModel();
+            coordinates.SourceLatitude = source.Latitude;
+            coordinates.SourceLongitude = source.Longitude;
+            coordinates.DestinationLatitude = destination.Latitude;
+            coordinates.DestinationLongitude = destination.Longitude;
+            rootFrame.Navigate(typeof(PriceEstimatesPage), coordinates);
         }
     }
 }

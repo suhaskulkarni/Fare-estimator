@@ -32,7 +32,7 @@
 
         <TextBox x:Name="tb_source" Text="Enter source here" GotFocus="TextBox_GotFocus" Grid.Row="1">
             <FlyoutBase.AttachedFlyout>
-                <Flyout Placement="Full" Opening="Flyout_Opening">
+                <Flyout Placement="Full">
                     <Flyout.FlyoutPresenterStyle>
                         <Style TargetType="FlyoutPresenter">
                             <Setter Property="Background" Value="{StaticResource BackgroundColor}"/>

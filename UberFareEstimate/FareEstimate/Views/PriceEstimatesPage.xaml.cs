@@ -46,16 +46,16 @@ namespace FareEstimate.Views
             Messenger.Default.Send<PageTypeEnumMessage>(PageTypeEnumMessage.PriceEstimatesPage);
 
             var dataContext = this.DataContext as Viewmodel.PriceEstimatesViewModel;
-            //if(e.Parameter != null)
-            //{
-                //CoordinatesDetailModel coordinates = e.Parameter as CoordinatesDetailModel;
-            CoordinatesDetailModel coordinates = new CoordinatesDetailModel();
-            coordinates.SourceLatitude = "12.9780275";
-            coordinates.SourceLongitude = "77.5701955";
-            coordinates.DestinationLatitude = "12.8728932";
-            coordinates.DestinationLongitude = "77.5945862";
-            dataContext.GetCabFareEstimates(coordinates);
-            //}
+            if (e.Parameter != null)
+            {
+                CoordinatesDetailModel coordinates = e.Parameter as CoordinatesDetailModel;
+                //CoordinatesDetailModel coordinates = new CoordinatesDetailModel();
+                //coordinates.SourceLatitude = "12.9780275";
+                //coordinates.SourceLongitude = "77.5701955";
+                //coordinates.DestinationLatitude = "12.8728932";
+                //coordinates.DestinationLongitude = "77.5945862";
+                dataContext.GetCabFareEstimates(coordinates);
+            }
         }
 
         public async void NavigationPageEventHandler(NavigateToPageMessage msg)
