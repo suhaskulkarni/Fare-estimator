@@ -8,8 +8,12 @@ namespace FareEstimate.Enums
 {
     public enum CabType
     {
-        Ola = 0,
+        ola = 0,
 
-        Uber = 1
+        uber = 1,
+
+        taxiforsure = 2,
+
+        meru = 3
     }
 }

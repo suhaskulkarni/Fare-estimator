@@ -5,7 +5,6 @@
     xmlns:local="using:FareEstimate.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:toolkit="using:BlendrocksToolkit.Controls"
     mc:Ignorable="d"
     xmlns:uc="using:FareEstimate.Views.Control"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -40,10 +39,8 @@
                             <ColumnDefinition Width="50"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock x:Uid="DistanceString" Grid.Column="1" Style="{StaticResource TitleTextPrimary}"/>
-                        <TextBlock Text="{Binding Distance}" Grid.Column="2" Style="{StaticResource TitleTextPrimary}"/>
-                        <TextBlock x:Uid="EstimatedTimeString" Grid.Column="4" Style="{StaticResource TitleTextPrimary}"/>
-                        <TextBlock Text="{Binding EstimatedTime}" Grid.Column="5" Style="{StaticResource TitleTextPrimary}"/>
+                        <TextBlock x:Uid="EstimatedTimeString" Grid.Column="1" Style="{StaticResource TitleTextPrimary}"/>
+                        <TextBlock Text="{Binding EstimatedTime}" Grid.Column="2" Style="{StaticResource TitleTextPrimary}"/>
                     </Grid>
                 </Grid>
             </Border>
@@ -54,6 +51,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -72,16 +70,31 @@
                       SelectionChanged="Sort_SelectionChanged" Visibility="{Binding IsInProgress, Converter={StaticResource NB2VConverter}}">
             </ComboBox>
         </Grid>
-        <ProgressRing Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+        <Border Grid.Row="2" BorderThickness="2" Background="White" Visibility="{Binding IsInProgress, Converter={StaticResource NB2VConverter}}">
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Uid="DistanceString" Grid.Column="0" Style="{StaticResource TitleTextPrimaryLarge}"/>
+                <TextBlock Text="{Binding Distance}" Grid.Column="1" Style="{StaticResource TitleTextPrimaryLarge}"/>
+            </Grid>
+        </Border>
+        <ProgressRing Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Stretch"
                         Width="150" Height="150" IsActive="True"  Background="Transparent"
                         Foreground="Indigo" Visibility="{Binding IsInProgress, Converter={StaticResource B2VConverter}}"/>
-        <toolkit:PullToRefreshScrollViewer x:Name="CabsListView" RefreshCommand="{Binding Path=RefreshPageCommand}" PullText="{Binding PullToRefreshText}" 
-                                           RefreshText="{Binding ReleaseToRefreshText}" ArrowColor="{StaticResource BackgroundComplimentColor}" Grid.Row="2" BorderThickness="2">
-            <ListView ItemsSource="{Binding CabsListGroup}"
+        <ScrollViewer x:Name="CabsListView" Grid.Row="3" VerticalScrollMode="Auto" BorderThickness="2">
+            <ListView ItemsSource="{Binding CabsListGroup}" IsItemClickEnabled="True" ItemClick="CabListView_ItemClick"
                       ItemTemplate="{StaticResource CabsListTemplate}"
                       Visibility="{Binding IsInProgress, Converter={StaticResource NB2VConverter}}">
 
             </ListView>
-        </toolkit:PullToRefreshScrollViewer>
+        </ScrollViewer>
     </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Refresh" x:Name="RefreshButton" x:Uid="RefreshAppBarButton" Tag="Refresh" Click="RefreshButton_Click" />
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>
