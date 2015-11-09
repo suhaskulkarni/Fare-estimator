@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BD55CBF2-2DDD-4E7E-97E6-E4BA526C1C9E}</ProjectGuid>
+    <ProjectGuid>{67b11d0b-5349-4259-844e-8df1e332e883}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UberFareEstimateFramework</RootNamespace>
-    <AssemblyName>UberFareEstimateFramework</AssemblyName>
+    <RootNamespace>BingLocationDataParser</RootNamespace>
+    <AssemblyName>BingLocationDataParser</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
@@ -79,27 +79,11 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Common\Constants.cs" />
-    <Compile Include="Json\CabServices.cs" />
-    <Compile Include="OAuthService\OAuthOlaProvider.cs" />
-    <Compile Include="OAuthService\OAuthOlaProviderResult.cs" />
-    <Compile Include="OAuthService\OAuthOlaService.cs" />
-    <Compile Include="OAuthService\OAuthRestOfCabsProvider.cs" />
-    <Compile Include="OAuthService\OAuthRestOfCabsProviderResult.cs" />
-    <Compile Include="OAuthService\OAuthRestOfCabsService.cs" />
-    <Compile Include="OAuthService\OAuthUberProvider.cs" />
-    <Compile Include="OAuthService\OAuthUberProviderResult.cs" />
-    <Compile Include="OAuthService\OAuthUberService.cs" />
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
@@ -115,4 +99,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+
 </Project>

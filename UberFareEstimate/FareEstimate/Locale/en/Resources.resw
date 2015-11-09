@@ -121,7 +121,7 @@
     <value>Cabs List</value>
   </data>
   <data name="DistanceString/Text" xml:space="preserve">
-    <value>DX:</value>
+    <value>Distance: </value>
   </data>
   <data name="EstimatedTimeString/Text" xml:space="preserve">
     <value>ETA:</value>
@@ -140,5 +140,11 @@
   </data>
   <data name="UnableToGetCabsList" xml:space="preserve">
     <value>Unable to get the cabs list. Sorry for the inconvenience.</value>
+  </data>
+  <data name="RefreshAppBarButton/Content" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="NotAvailable" xml:space="preserve">
+    <value>N/A</value>
   </data>
 </root>
