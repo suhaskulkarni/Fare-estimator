@@ -12,13 +12,60 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <DataTemplate x:Key="LocationListItemTemplate">
+
+            <TextBlock Text="{Binding LocationName}"  FontSize="{StaticResource TextStyleMediumFontSize}" HorizontalAlignment="Stretch"/>
+           
+        </DataTemplate>
+    </Page.Resources>
+    
     <Grid x:Name="LayoutRoot" Background="{StaticResource BackgroundColor}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <uc:HeaderPage Grid.Row="0" Name="HeaderControl" Height="60"/>
+
+        <TextBox x:Name="tb_source" Text="Enter source here" GotFocus="TextBox_GotFocus" Grid.Row="1">
+            <FlyoutBase.AttachedFlyout>
+                <Flyout Placement="Full" Opening="Flyout_Opening">
+                    <Flyout.FlyoutPresenterStyle>
+                        <Style TargetType="FlyoutPresenter">
+                            <Setter Property="Background" Value="{StaticResource BackgroundColor}"/>
+                        </Style>
+                    </Flyout.FlyoutPresenterStyle>
+                    
+                    <StackPanel>
+                        <uc:HeaderPage Height="60"/>
+                        <TextBox TextChanged="TextBox_TextChanged"/>
+                        <ListBox ItemsSource="{Binding LocationList}" ItemTemplate="{StaticResource LocationListItemTemplate}" SelectionChanged="SourceListBox_SelectionChanged"/>
+                    </StackPanel>
+                </Flyout>
+            </FlyoutBase.AttachedFlyout>
+        </TextBox>
+
+        <TextBox x:Name="tb_dest" Text="Enter destination here" GotFocus="TextBox_GotFocus" Grid.Row="2">
+            <FlyoutBase.AttachedFlyout>
+                <Flyout Placement="Full">
+                    <Flyout.FlyoutPresenterStyle>
+                        <Style TargetType="FlyoutPresenter">
+                            <Setter Property="Background" Value="{StaticResource BackgroundColor}"/>
+                        </Style>
+                    </Flyout.FlyoutPresenterStyle>
+                    <StackPanel>
+                        <uc:HeaderPage Height="60"/>
+                        <TextBox TextChanged="TextBox_TextChanged"/>
+                        <ListBox ItemsSource="{Binding LocationList}" ItemTemplate="{StaticResource LocationListItemTemplate}" SelectionChanged="DestListBox_SelectionChanged"/>
+                    </StackPanel>
+                </Flyout>
+            </FlyoutBase.AttachedFlyout>
+        </TextBox>
+        
+        <Button HorizontalAlignment="Center" VerticalAlignment="Bottom" Content="Vamoose" Grid.Row="3" Click="Button_Click"/>
     </Grid>
     
 </Page>

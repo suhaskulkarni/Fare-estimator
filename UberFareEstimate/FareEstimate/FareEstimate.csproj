@@ -108,6 +108,7 @@
     <Compile Include="Converters\B2VConverter.cs" />
     <Compile Include="DataModel\CabsListDetailModel.cs" />
     <Compile Include="DataModel\CoordinatesDetailModel.cs" />
+    <Compile Include="DataModel\LocationDataModel.cs" />
     <Compile Include="Enums\CabType.cs" />
     <Compile Include="Common\NavigateToPageMessage.cs" />
     <Compile Include="Enums\PageTypeEnumMessage.cs" />
@@ -194,6 +195,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BingLocationDataParser\BingMapsLocationDataParser.csproj">
+      <Project>{67b11d0b-5349-4259-844e-8df1e332e883}</Project>
+      <Name>BingMapsLocationDataParser</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UberFareEstimateFramework\UberFareEstimateFramework.csproj">
       <Project>{bd55cbf2-2ddd-4e7e-97e6-e4ba526c1c9e}</Project>
       <Name>UberFareEstimateFramework</Name>
