@@ -99,7 +99,7 @@ namespace FareEstimate
                 // configuring the new page by passing required information as a navigation
                 // parameter
                 await Task.Delay(2000);
-                if (!rootFrame.Navigate(typeof(PriceEstimatesPage), e.Arguments))
+                if (!rootFrame.Navigate(typeof(LocationPage), e.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
                 }

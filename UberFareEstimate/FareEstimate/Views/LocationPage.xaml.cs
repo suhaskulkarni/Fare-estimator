@@ -1,4 +1,6 @@
-﻿using FareEstimate.Enums;
+﻿using FareEstimate.DataModel;
+using FareEstimate.Enums;
+using FareEstimate.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
@@ -7,6 +9,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -27,7 +30,11 @@ namespace FareEstimate.Views
         public LocationPage()
         {
             this.InitializeComponent();
+            this.DataContext = new LocationPageViewModel();
         }
+
+        private LocationDataModel source;
+        private LocationDataModel destination;
 
         /// <summary>
         /// Invoked when this page is about to be displayed in a Frame.
@@ -36,7 +43,53 @@ namespace FareEstimate.Views
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Messenger.Default.Send<PageTypeEnumMessage>(PageTypeEnumMessage.LocationPage);
+            //Messenger.Default.Send<PageTypeEnumMessage>(PageTypeEnumMessage.LocationPage);
+        }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var tb = sender as TextBox;
+            //tb.Visibility = Visibility.Collapsed;
+            Flyout.ShowAttachedFlyout(tb);
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var tb = sender as TextBox;
+            var dc = (this.DataContext as LocationPageViewModel);
+            dc.ClearList();
+            if (tb.Text.Length >= 3)
+            {
+                dc.ShowLocationSuggestions(tb.Text);
+            }
+        }
+
+        private void SourceListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedLocation = (LocationDataModel)(sender as ListBox).SelectedItem;
+            source = selectedLocation;
+            tb_source.Text = source.LocationName;
+        }
+
+        private void DestListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedLocation = (LocationDataModel)(sender as ListBox).SelectedItem;
+            destination = selectedLocation;
+            tb_dest.Text = destination.LocationName;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigate(typeof(PriceEstimatesPage));
+        }
+
+        private void Flyout_Opening(object sender, object e)
+        {
+            var statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+
+            statusBar.BackgroundColor = Colors.Indigo;
+            statusBar.BackgroundOpacity = 1;
         }
     }
 }
