@@ -56,17 +56,7 @@ namespace FareEstimate.Views
                 //coordinates.DestinationLongitude = "77.5945862";
                 dataContext.GetCabFareEstimates(coordinates);
             }
-            //if(e.Parameter != null)
-            //{
-                //CoordinatesDetailModel coordinates = e.Parameter as CoordinatesDetailModel;
-            CoordinatesDetailModel coordinates = new CoordinatesDetailModel();
-            coordinates.SourceLatitude = "12.9766637";
-            coordinates.SourceLongitude = "77.5712556";
-            coordinates.DestinationLatitude = "12.8789001";
-            coordinates.DestinationLongitude = "77.6089869";
-            coordinates.CityOfCoordinates = "Bangalore";
-            dataContext.GetCabFareEstimates(coordinates);
-            //}
+            
         }
 
         public async void NavigationPageEventHandler(NavigateToPageMessage msg)
